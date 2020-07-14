@@ -49,7 +49,7 @@ class MetricSnapshotDataFrame(DataFrame):
     def __init__(
         self,
         data=None,
-        ts_values_keep: str = 'last',
+        ts_values_keep: str = "last",
         index: Optional[Axes] = None,
         columns: Optional[Axes] = None,
         dtype: Optional[Dtype] = None,

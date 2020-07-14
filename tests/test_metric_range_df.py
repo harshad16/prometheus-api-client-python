@@ -45,7 +45,7 @@ class TestMetricRangeDataFrame(unittest.TestCase):
             df = MetricRangeDataFrame(current_metric_list)
             num_values = sum([len(v["values"]) for v in current_metric_list])
             self.assertEqual(
-                (len(df.index.values), df.shape[1]),    # shape[1] = 4xlabels + value
+                (len(df.index.values), df.shape[1]),  # shape[1] = 4xlabels + value
                 (num_values, 5),
                 "incorrect dataframe shape",
             )
@@ -58,14 +58,16 @@ class TestMetricRangeDataFrame(unittest.TestCase):
         for curr_metric_list in self.raw_metrics_list:
             self.assertEqual(
                 set(MetricRangeDataFrame(curr_metric_list).index.values),
-                set([v[0] for s in curr_metric_list for v in s["values"] ])
+                set([v[0] for s in curr_metric_list for v in s["values"]]),
             )
 
     def test_init_columns(self):
         """
         Test if dataframe initialized has correct columns
         """
-        for curr_metric_labels, curr_metric_list in zip(self.raw_metrics_labels, self.raw_metrics_list):
+        for curr_metric_labels, curr_metric_list in zip(
+            self.raw_metrics_labels, self.raw_metrics_list
+        ):
             self.assertEqual(
                 curr_metric_labels.union({"value"}),
                 set(MetricRangeDataFrame(curr_metric_list).columns),
