@@ -10,15 +10,17 @@ def get_install_requires():
         res = requirements_file.readlines()
         return [req.split(" ", maxsplit=1)[0] for req in res if req]
 
+
 def get_version():
-    with open(os.path.join('prometheus_api_client', '__init__.py')) as f:
+    with open(os.path.join("prometheus_api_client", "__init__.py")) as f:
         content = f.readlines()
 
     for line in content:
-        if line.startswith('__version__ ='):
+        if line.startswith("__version__ ="):
             # dirty, remove trailing and leading chars
-            return line.split(' = ')[1][1:-2]
+            return line.split(" = ")[1][1:-2]
     raise ValueError("No version identifier found")
+
 
 VERSION = get_version()
 setuptools.setup(

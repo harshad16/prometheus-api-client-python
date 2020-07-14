@@ -6,7 +6,14 @@ from httmock import HTTMock, all_requests, response, urlmatch
 
 
 def mock_response(
-        content, url=None, path='', headers=None, response_url=None, status_code=200, cookies=None, func=None
+    content,
+    url=None,
+    path="",
+    headers=None,
+    response_url=None,
+    status_code=200,
+    cookies=None,
+    func=None,
 ):
     """Universal handler for specify mocks inplace"""
     if func is None:
@@ -45,7 +52,7 @@ class ResponseMock(HTTMock):
         return resp
 
     def __init__(self, *args, **kwargs):
-        log_requests = kwargs.pop('log_requests', True)
+        log_requests = kwargs.pop("log_requests", True)
         handler = mock_response(*args, **kwargs)
         self.log_requests = log_requests
         self.requests = []
@@ -53,9 +60,8 @@ class ResponseMock(HTTMock):
 
 
 class BaseMockedNetworkTestcase(TestCase):
-
     def run(self, result=None):
-        with ResponseMock('BOOM!', status_code=403):
+        with ResponseMock("BOOM!", status_code=403):
             return super().run(result)
 
     @property

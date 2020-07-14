@@ -116,9 +116,7 @@ class TestPrometheusConnect(unittest.TestCase):
 
     def test_get_metric_aggregation_with_incorrect_input_types(self):
         with self.assertRaises(TypeError, msg="operations accepted invalid value type"):
-            _ = self.pc.get_metric_aggregation(
-                query="up", operations="sum"
-            )
+            _ = self.pc.get_metric_aggregation(query="up", operations="sum")
 
 
 class TestPrometheusConnectWithMockedNetwork(BaseMockedNetworkTestcase):
@@ -127,23 +125,23 @@ class TestPrometheusConnectWithMockedNetwork(BaseMockedNetworkTestcase):
     """
 
     def setUp(self):
-        self.pc = PrometheusConnect(url='http://doesnt_matter.xyz', disable_ssl=True)
+        self.pc = PrometheusConnect(url="http://doesnt_matter.xyz", disable_ssl=True)
 
     def test_network_is_blocked(self):
-        resp = requests.get('https://google.com')
+        resp = requests.get("https://google.com")
         self.assertEqual(resp.status_code, 403)
-        self.assertEqual(resp.text, 'BOOM!')
+        self.assertEqual(resp.text, "BOOM!")
 
     def test_how_mock_prop_works(self):
-        with self.mock_response('kekekeke', status_code=500) as handler:
+        with self.mock_response("kekekeke", status_code=500) as handler:
             self.assertEqual(len(handler.requests), 0)
-            resp = requests.get('https://redhat.com')
+            resp = requests.get("https://redhat.com")
             self.assertEqual(resp.status_code, 500)
-            self.assertEqual(resp.text, 'kekekeke')
+            self.assertEqual(resp.text, "kekekeke")
 
             self.assertEqual(len(handler.requests), 1)
             request = handler.requests[0]
-            self.assertEqual(request.url, 'https://redhat.com/')
+            self.assertEqual(request.url, "https://redhat.com/")
 
     def test_unauthorized(self):
         with self.mock_response("Unauthorized", status_code=403):

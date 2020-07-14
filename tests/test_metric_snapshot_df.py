@@ -25,7 +25,6 @@ class TestMetricSnapshotDataFrame(unittest.TestCase):
                     labels.update(set(i["metric"].keys()))
                 self.raw_metrics_labels.append(labels)
 
-
     def test_setup(self):
         """
         Check if setup was done correctly
@@ -33,7 +32,6 @@ class TestMetricSnapshotDataFrame(unittest.TestCase):
         self.assertEqual(
             8, len(self.raw_metrics_list), "incorrect number json files read (incorrect test setup)"
         )
-
 
     def test_init_shape(self):
         """
@@ -43,23 +41,23 @@ class TestMetricSnapshotDataFrame(unittest.TestCase):
         # each json file contains 9 entries, 4 labels
         for current_metric_list in self.raw_metrics_list:
             self.assertEqual(
-                (9, 6),    # shape[1] = 4xlabels + timestamp + value
+                (9, 6),  # shape[1] = 4xlabels + timestamp + value
                 MetricSnapshotDataFrame(current_metric_list).shape,
                 "incorrect dataframe shape",
             )
-
 
     def test_init_columns(self):
         """
         Test if dataframe initialized has correct columns
         """
-        for curr_metric_labels, curr_metric_list in zip(self.raw_metrics_labels, self.raw_metrics_list):
+        for curr_metric_labels, curr_metric_list in zip(
+            self.raw_metrics_labels, self.raw_metrics_list
+        ):
             self.assertEqual(
                 curr_metric_labels.union({"timestamp", "value"}),
                 set(MetricSnapshotDataFrame(curr_metric_list).columns),
                 "incorrect dataframe columns",
             )
-
 
     def test_init_single_metric(self):
         """
